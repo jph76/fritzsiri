@@ -82,10 +82,14 @@ if __name__ == "__main__":
         if ain == {}:
             print("No smarthome actors available")
             exit(1)
+        if fc.call_action(service_name="X_AVM-DE_Homeauto1",
+                          action_name="GetSpecificDeviceInfos",
+                          NewAIN=ain[args.aktor])["NewSwitchIsEnabled"] == "DISABLED":
+            print("Actor doesn’t allow switching")
+            exit(1)
         if args.aktor is not None:
             print(args.aktor, args.stellung)
             fc.call_action(service_name="X_AVM-DE_Homeauto1", action_name="SetSwitch",
                            NewAIN=ain[args.aktor], NewSwitchState=schalter[args.stellung])
         else:
             print("missing actor")
-
